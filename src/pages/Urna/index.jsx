@@ -1,18 +1,14 @@
 import { useState } from "react";
-import person from '../../assets/person.png'
+import person from "../../assets/person.png";
 import { DisplayVereador } from "../../components/Displays/DisplayVereador";
 import { DisplayPrefeito } from "../../components/Displays/DisplayPrefeito";
 import { DisplayPlebiscito } from "../../components/Displays/DisplayPlebiscito";
-import {Teclado} from '../../components/Teclado'
+import { Teclado } from "../../components/Teclado";
+import { DisplayFim } from "../../components/Displays/DisplayFim";
 
 export function Urna() {
   const [etapa, setEtapa] = useState("vereador");
   const [numeroDigitado, setNumeroDigitado] = useState("");
-  const [votos, setVotos] = useState({
-    vereador: "",
-    prefeito: "",
-    plebiscito: "",
-  });
 
   const handleNumeroClick = (numero) => {
     if (etapa === "vereador" && numeroDigitado.length < 5) {
@@ -26,13 +22,13 @@ export function Urna() {
 
   const handleConfirma = () => {
     if (etapa === "vereador" && numeroDigitado === "00000") {
-      setVotos((prev) => ({ ...prev, vereador: numeroDigitado }));
       setEtapa("prefeito");
     } else if (etapa === "prefeito" && numeroDigitado === "00") {
-      setVotos((prev) => ({ ...prev, prefeito: numeroDigitado }));
       setEtapa("plebiscito");
-    } else if (etapa === "plebiscito" && (numeroDigitado === "1" || numeroDigitado === "2")) {
-      setVotos((prev) => ({ ...prev, plebiscito: numeroDigitado }));
+    } else if (
+      etapa === "plebiscito" &&
+      (numeroDigitado === "1" || numeroDigitado === "2")
+    ) {
       setEtapa("fim");
     }
     setNumeroDigitado("");
@@ -43,11 +39,18 @@ export function Urna() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-200 flex items-center justify-center">
-      <div className="bg-[#D6D0C4] p-8 rounded-lg shadow-lg flex space-x-8">
-        {etapa === "vereador" && <DisplayVereador numeroDigitado={numeroDigitado} person={person}/>}
-        {etapa === "prefeito" && <DisplayPrefeito numeroDigitado={numeroDigitado} person={person}/>}
-        {etapa === "plebiscito" && <DisplayPlebiscito numeroDigitado={numeroDigitado} />}
+    <div className="min-h-screen w-full bg-[#1C69AF] flex items-center justify-center">
+      <div className="w-1/2 flex flex-col bg-[#B7B5B2] px-8 py-4 rounded-sm space-x-8 ">
+        {etapa === "vereador" && (
+          <DisplayVereador numeroDigitado={numeroDigitado} person={person} />
+        )}
+        {etapa === "prefeito" && (
+          <DisplayPrefeito numeroDigitado={numeroDigitado} person={person} />
+        )}
+        {etapa === "plebiscito" && (
+          <DisplayPlebiscito numeroDigitado={numeroDigitado} />
+        )}
+        {etapa === "fim" && <DisplayFim />}
         <Teclado
           handleNumeroClick={handleNumeroClick}
           handleConfirma={handleConfirma}
