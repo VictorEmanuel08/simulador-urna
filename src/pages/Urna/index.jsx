@@ -5,6 +5,7 @@ import { DisplayPrefeito } from "../../components/Displays/DisplayPrefeito";
 import { DisplayPlebiscito } from "../../components/Displays/DisplayPlebiscito";
 import { Teclado } from "../../components/Teclado";
 import { DisplayFim } from "../../components/Displays/DisplayFim";
+import { IoReload } from "react-icons/io5";
 
 export function Urna() {
   const [etapa, setEtapa] = useState("vereador");
@@ -38,8 +39,14 @@ export function Urna() {
     setNumeroDigitado("");
   };
 
+  const handleReload = () => {
+    setEtapa("vereador")
+  }
+
   return (
-    <div className="min-h-screen w-full bg-[#1C69AF] flex items-center justify-center">
+    <div className="relative min-h-screen w-full bg-[#1C69AF] flex items-center justify-center">
+      <div className="bg-white rounded-full absolute top-12 right-12 p-2 cursor-pointer" onClick={handleReload}><IoReload className="text-2xl"/>
+      </div>
       <div className="w-1/2 flex flex-col bg-[#B7B5B2] px-8 py-4 rounded-sm space-x-8 ">
         {etapa === "vereador" && (
           <DisplayVereador numeroDigitado={numeroDigitado} person={person} />
