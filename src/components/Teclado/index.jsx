@@ -1,14 +1,23 @@
-export function Teclado({ handleNumeroClick, handleConfirma, handleCorrige }) {
+import { FaArrowRight } from "react-icons/fa";
+
+export function Teclado({
+  handleNumeroClick,
+  handleConfirma,
+  handleCorrige,
+  handleBranco,
+  etapa,
+  handleFim,
+}) {
   const numeros = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
   return (
-    <div className="bg-[#B7B5B2] py-4 px-12 rounded-lg flex flex-row items-center justify-between space-x-2">
+    <div className="relative bg-[#B7B5B2] py-4 px-12 rounded-lg flex flex-row items-center justify-between space-x-2">
       <div className="w-1/4 flex flex-col items-center justify-center space-y-2">
         <div className="flex flex-col items-center justify-center text-gray-500 border-2 border-gray-400 rounded-md py-1 px-6 text-base font-medium">
           <p>URNA</p>
           <p>ELEITORAL</p>
         </div>
-        <div className="w-full text-gray-500 border-2 border-gray-400 rounded-md py-2 px-6 text-base font-medium"></div>
+        <div className="w-full text-gray-500 border-2 border-gray-400 rounded-md py-2 px-6 text-base font-medium "></div>
       </div>
       <div className="grid grid-cols-3 gap-2">
         {numeros.map((numero) => (
@@ -32,7 +41,7 @@ export function Teclado({ handleNumeroClick, handleConfirma, handleCorrige }) {
       </div>
       <div className="grid grid-cols-1 gap-3">
         <button
-          onClick={() => {}}
+          onClick={handleBranco}
           className="bg-gray-200 rounded-sm hover:bg-gray-100 w-full h-12 text-xs font-semibold col-span-1 flex flex-col items-center justify-start leading-none px-1 py-2"
         >
           BRANCO
@@ -50,6 +59,11 @@ export function Teclado({ handleNumeroClick, handleConfirma, handleCorrige }) {
           CONFIRMA
         </button>
       </div>
+      {etapa === "plebiscito" && (
+        <div className="absolute top-4 right-1 cursor-pointer" onClick={handleFim}>
+          <FaArrowRight className="text-xl text-white" />
+        </div>
+      )}
     </div>
   );
 }
